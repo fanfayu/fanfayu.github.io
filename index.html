@@ -1,4 +1,3 @@
-<?php header('Content-Type: text/html; charset=utf-8'); ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -149,13 +148,16 @@
             background-color: white;
             border: none;
             border-radius: 10px;
-            padding: 25px 15px;
+            padding: 20px 15px;
             text-align: center;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         
         .scammer-btn:hover {
@@ -168,27 +170,109 @@
             background-color: #fff3e0;
         }
         
-        .scammer-btn i {
-            font-size: 2rem;
-            color: #ff4d4f;
-            margin-bottom: 15px;
+        .scammer-btn.active {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            background-color: #fff8f8;
         }
         
-        .scammer-btn.warning i {
-            color: #ff9800;
+        .scammer-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 12px;
+            border: 2px solid #ff4d4f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .scammer-btn.warning .scammer-avatar {
+            border-color: #ff9800;
+        }
+        
+        .scammer-btn.active .scammer-avatar {
+            transform: scale(1.1);
+            border-width: 3px;
+        }
+        
+        .scammer-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .scammer-avatar .default-avatar {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+            color: #999;
+            font-size: 1.5rem;
         }
         
         .scammer-title {
             font-weight: 600;
             font-size: 1.1rem;
             color: #333;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             word-break: break-word;
+            text-align: center;
+        }
+        
+        .scammer-details {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            width: 100%;
+            text-align: left;
+            line-height: 1.4;
+        }
+        
+        .scammer-btn.active .scammer-details {
+            max-height: 200px;
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px dashed #eee;
+        }
+        
+        .detail-item {
+            margin-bottom: 4px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .detail-label {
+            color: #888;
+            min-width: 60px;
+            font-size: 0.8rem;
+        }
+        
+        .detail-content {
+            flex: 1;
+            color: #555;
+        }
+        
+        .detail-content a {
+            color: #00a1d6;
+            text-decoration: none;
+        }
+        
+        .detail-content a:hover {
+            text-decoration: underline;
         }
         
         .scammer-status {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #666;
+            margin-bottom: 5px;
         }
         
         .scammer-id {
@@ -200,6 +284,36 @@
             font-size: 0.8rem;
             padding: 3px 8px;
             border-radius: 10px;
+        }
+        
+        .scammer-uid {
+            font-size: 0.8rem;
+            color: #999;
+            margin-top: 2px;
+        }
+        
+        .detail-toggle {
+            margin-top: 5px;
+            font-size: 0.75rem;
+            color: #00a1d6;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 2px 5px;
+        }
+        
+        .detail-toggle:hover {
+            text-decoration: underline;
+        }
+        
+        .detail-toggle i {
+            font-size: 0.7rem;
+            margin-left: 3px;
+            transition: transform 0.3s ease;
+        }
+        
+        .scammer-btn.active .detail-toggle i {
+            transform: rotate(180deg);
         }
         
         footer {
@@ -256,8 +370,116 @@
             }
             
             .scammer-btn {
-                padding: 20px 10px;
+                padding: 15px 10px;
             }
+            
+            .scammer-avatar {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .scammer-details {
+                font-size: 0.8rem;
+            }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #666;
+            cursor: pointer;
+        }
+        
+        .modal-title {
+            color: #ff4d4f;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .modal-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 20px;
+            border: 3px solid #ff4d4f;
+        }
+        
+        .modal-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .modal-details {
+            margin-top: 20px;
+        }
+        
+        .modal-detail-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .modal-detail-label {
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .modal-detail-content {
+            color: #333;
+            line-height: 1.5;
+        }
+        
+        .modal-links {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .modal-btn {
+            padding: 8px 15px;
+            background-color: #00a1d6;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .modal-btn:hover {
+            background-color: #0085b2;
         }
     </style>
 </head>
@@ -279,7 +501,7 @@
     <header>
         <h1>凡罚于pofanfa的网站之：b站骗子实时更新</h1>
         <div class="subtitle">
-            <p>本平台实时更新B站上已确认的骗子账号信息，帮助用户识别和避免受骗。所有信息均经过核实，点击下方按钮可跳转到骗子的B站个人空间。</p>
+            <p>本平台实时更新B站上已确认的骗子账号信息，帮助用户识别和避免受骗。所有信息均经过核实，点击下方按钮可跳转到骗子的B站个人空间。点击"查看详情"可查看骗子详细信息。</p>
         </div>
         <div class="info-box">
             <i class="fas fa-exclamation-circle"></i>
@@ -289,6 +511,16 @@
 
     <div class="container">
         <div class="buttons-grid" id="scammerGrid"></div>
+    </div>
+
+    <!-- 详细信息模态框 -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div id="modalContent">
+                <!-- 模态框内容将通过JavaScript动态生成 -->
+            </div>
+        </div>
     </div>
 
     <footer>
@@ -302,73 +534,303 @@
     </footer>
 
     <script>
-        // 模拟骗子数据
+        // 骗子数据格式: [id, 名称, 头像链接, B站链接, 是否已确认, 详细信息]
+        // 详细信息格式: {诈骗方式: "", 行骗时间: "", 受骗人数: "", 备注: ""}
         const scammerData = [
-            [1, "强盛帮抽", "https://space.bilibili.com/3690970262539023", true],
-            [2, "", "", false],
-            [3, "", "", false],
-            [4, "", "", false],
-            [5, "", "", false],
-            [6, "", "", false],
-            [7, "", "", false],
-            [8, "", "", false],
-            [9, "", "", false],
-            [10, "", "", false]
+            // 格式说明: [编号, "骗子名称", "头像图片链接", "B站个人空间链接", 是否已确认, {详细信息对象}]
+            // 示例数据:
+            [1, "强盛帮抽", "https://i0.hdslb.com/bfs/face/63277e668f357ff3d2516a25113eb09dec1c50af.jpg@128w_128h_1c_1s.webp", "https://space.bilibili.com/3690970262539023", true, {
+                诈骗方式: "虚假抽奖活动",
+                行骗时间: "2025年10月-至今在诈骗",
+                受骗人数: "无消息",
+                诈骗金额: "单次约30~100元",
+                常用手法: "声称免费抽奖，要求先支付邮费或保证金",
+                活动平台: "B站",
+                备注: "无"
+            }],
         ];
         
         const totalButtons = 100;
         const scammerGrid = document.getElementById('scammerGrid');
         const scammerCount = document.getElementById('scammerCount');
         const confirmedCount = document.getElementById('confirmedCount');
+        const detailModal = document.getElementById('detailModal');
+        const modalContent = document.getElementById('modalContent');
+        const modalClose = document.getElementById('modalClose');
         
-        let addedScammerCount = 0;
-        let confirmedScammerCount = 0;
+        // 当前活动的按钮（显示详细信息的按钮）
+        let activeButton = null;
         
-        for (let i = 1; i <= totalButtons; i++) {
-            const scammer = scammerData.find(item => item[0] === i);
-            let title = "敬请期待";
-            let url = "#";
-            let isConfirmed = false;
-            let hasInfo = false;
+        // 生成默认头像URL（基于编号的占位图）
+        function getDefaultAvatar(id) {
+            return `https://ui-avatars.com/api/?name=骗子${id}&background=ff4d4f&color=fff&size=60`;
+        }
+        
+        // 更新统计数据
+        function updateStats() {
+            let addedScammerCount = 0;
+            let confirmedScammerCount = 0;
             
-            if (scammer) {
-                title = scammer[1] || "敬请期待";
-                url = scammer[2] || "#";
-                isConfirmed = scammer[3] || false;
-                hasInfo = scammer[1] !== "" && scammer[2] !== "";
-                if (hasInfo) {
+            scammerData.forEach(item => {
+                if (item[1] !== "" && item[3] !== "") {
                     addedScammerCount++;
-                    if (isConfirmed) confirmedScammerCount++;
+                    if (item[4]) {
+                        confirmedScammerCount++;
+                    }
+                }
+            });
+            
+            scammerCount.textContent = addedScammerCount;
+            confirmedCount.textContent = confirmedScammerCount;
+        }
+        
+        // 切换详细信息显示
+        function toggleDetails(buttonId) {
+            const button = document.getElementById(buttonId);
+            
+            if (activeButton && activeButton.id !== buttonId) {
+                activeButton.classList.remove('active');
+            }
+            
+            if (button.classList.contains('active')) {
+                button.classList.remove('active');
+                activeButton = null;
+            } else {
+                button.classList.add('active');
+                activeButton = button;
+            }
+        }
+        
+        // 显示详细信息模态框
+        function showDetailModal(scammer) {
+            const id = scammer[0];
+            const name = scammer[1] || "敬请期待";
+            const avatarUrl = scammer[2] || "";
+            const bilibiliUrl = scammer[3] || "#";
+            const isConfirmed = scammer[4] || false;
+            const details = scammer[5] || {};
+            
+            // 构建头像HTML
+            let avatarHtml = '';
+            if (avatarUrl && avatarUrl.trim() !== "") {
+                avatarHtml = `<img src="${avatarUrl}" alt="${name}" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\"default-avatar\"><i class=\"fas fa-user-secret\"></i></div>';" />`;
+            } else {
+                avatarHtml = `<img src="${getDefaultAvatar(id)}" alt="${name}" />`;
+            }
+            
+            // 提取B站UID
+            let uid = "未知";
+            if (bilibiliUrl && bilibiliUrl.includes("space.bilibili.com/")) {
+                const match = bilibiliUrl.match(/space\.bilibili\.com\/(\d+)/);
+                if (match && match[1]) {
+                    uid = match[1];
                 }
             }
             
-            const button = document.createElement('button');
-            button.className = `scammer-btn ${hasInfo ? '' : 'warning'}`;
-            button.id = `scammer-${i}`;
+            // 构建详细信息HTML
+            let detailsHtml = '';
+            if (Object.keys(details).length > 0) {
+                detailsHtml = Object.entries(details).map(([key, value]) => `
+                    <div class="modal-detail-item">
+                        <div class="modal-detail-label">${key}：</div>
+                        <div class="modal-detail-content">${value}</div>
+                    </div>
+                `).join('');
+            } else {
+                detailsHtml = '<div class="modal-detail-item"><div class="modal-detail-content">暂无详细信息</div></div>';
+            }
             
-            button.innerHTML = `
-                <div class="scammer-id">#${i.toString().padStart(3, '0')}</div>
-                <i class="fas ${hasInfo ? 'fa-user-secret' : 'fa-question-circle'}"></i>
-                <div class="scammer-title">${title}</div>
-                <div class="scammer-status">${hasInfo ? (isConfirmed ? '已核实' : '待核实') : '未添加信息'}</div>
+            // 设置模态框内容
+            modalContent.innerHTML = `
+                <div class="modal-avatar">${avatarHtml}</div>
+                <h2 class="modal-title">${name}</h2>
+                <div class="modal-details">
+                    <div class="modal-detail-item">
+                        <div class="modal-detail-label">编号</div>
+                        <div class="modal-detail-content">#${id.toString().padStart(3, '0')}</div>
+                    </div>
+                    <div class="modal-detail-item">
+                        <div class="modal-detail-label">B站UID</div>
+                        <div class="modal-detail-content">${uid}</div>
+                    </div>
+                    <div class="modal-detail-item">
+                        <div class="modal-detail-label">状态</div>
+                        <div class="modal-detail-content">${isConfirmed ? '<span style="color:#52c41a;">已核实</span>' : '<span style="color:#faad14;">待核实</span>'}</div>
+                    </div>
+                    ${detailsHtml}
+                </div>
+                <div class="modal-links">
+                    ${bilibiliUrl !== "#" ? `<a href="${bilibiliUrl}" target="_blank" class="modal-btn"><i class="fas fa-external-link-alt"></i> 访问B站主页</a>` : ''}
+                    <button class="modal-btn" onclick="copyInfo(${id})"><i class="far fa-copy"></i> 复制信息</button>
+                </div>
             `;
             
-            if (hasInfo && url !== "#") {
-                button.addEventListener('click', function() { 
-                    window.open(url, '_blank'); 
-                });
-            } else {
-                button.addEventListener('click', function() { 
-                    alert('骗子 #' + i + ' 的信息尚未添加，敬请期待更新。'); 
+            // 显示模态框
+            detailModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // 复制骗子信息
+        function copyInfo(id) {
+            const scammer = scammerData.find(item => item[0] === id);
+            if (!scammer) return;
+            
+            const name = scammer[1] || "敬请期待";
+            const bilibiliUrl = scammer[3] || "";
+            const details = scammer[5] || {};
+            
+            let text = `B站骗子信息\n`;
+            text += `编号: #${id.toString().padStart(3, '0')}\n`;
+            text += `名称: ${name}\n`;
+            if (bilibiliUrl) text += `B站链接: ${bilibiliUrl}\n`;
+            
+            if (Object.keys(details).length > 0) {
+                text += `详细信息:\n`;
+                Object.entries(details).forEach(([key, value]) => {
+                    text += `  ${key}: ${value}\n`;
                 });
             }
             
-            scammerGrid.appendChild(button);
+            navigator.clipboard.writeText(text).then(() => {
+                alert('骗子信息已复制到剪贴板！');
+            }).catch(err => {
+                console.error('复制失败:', err);
+                alert('复制失败，请手动复制信息');
+            });
         }
         
-        scammerCount.textContent = addedScammerCount;
-        confirmedCount.textContent = confirmedScammerCount;
+        // 生成所有按钮
+        function generateButtons() {
+            scammerGrid.innerHTML = '';
+            
+            for (let i = 1; i <= totalButtons; i++) {
+                const scammer = scammerData.find(item => item[0] === i);
+                
+                let name = "敬请期待";
+                let avatarUrl = "";
+                let bilibiliUrl = "#";
+                let isConfirmed = false;
+                let hasInfo = false;
+                let details = {};
+                
+                if (scammer) {
+                    name = scammer[1] || "敬请期待";
+                    avatarUrl = scammer[2] || "";
+                    bilibiliUrl = scammer[3] || "#";
+                    isConfirmed = scammer[4] || false;
+                    details = scammer[5] || {};
+                    hasInfo = scammer[1] !== "" && scammer[3] !== "";
+                }
+                
+                const button = document.createElement('button');
+                button.className = `scammer-btn ${hasInfo ? '' : 'warning'}`;
+                button.id = `scammer-${i}`;
+                
+                // 构建头像HTML
+                let avatarHtml = '';
+                if (avatarUrl && avatarUrl.trim() !== "") {
+                    avatarHtml = `<img src="${avatarUrl}" alt="${name}" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'default-avatar\'><i class=\'fas fa-user-secret\'></i></div>';" />`;
+                } else if (hasInfo) {
+                    // 如果有信息但没有头像，使用默认头像
+                    avatarHtml = `<img src="${getDefaultAvatar(i)}" alt="${name}" />`;
+                } else {
+                    // 完全没有信息
+                    avatarHtml = `<div class="default-avatar"><i class="fas fa-question-circle"></i></div>`;
+                }
+                
+                // 提取B站UID（如果链接有效）
+                let uid = "UID: 未知";
+                if (bilibiliUrl && bilibiliUrl.includes("space.bilibili.com/")) {
+                    const match = bilibiliUrl.match(/space\.bilibili\.com\/(\d+)/);
+                    if (match && match[1]) {
+                        uid = `UID: ${match[1]}`;
+                    }
+                }
+                
+                // 构建详细信息HTML
+                let detailsHtml = '';
+                if (Object.keys(details).length > 0) {
+                    // 只显示前2个详细信息项
+                    const detailEntries = Object.entries(details);
+                    const showCount = Math.min(2, detailEntries.length);
+                    
+                    detailsHtml = detailEntries.slice(0, showCount).map(([key, value]) => `
+                        <div class="detail-item">
+                            <span class="detail-label">${key}：</span>
+                            <span class="detail-content">${value.length > 15 ? value.substring(0, 15) + '...' : value}</span>
+                        </div>
+                    `).join('');
+                }
+                
+                button.innerHTML = `
+                    <div class="scammer-id">#${i.toString().padStart(3, '0')}</div>
+                    <div class="scammer-avatar">
+                        ${avatarHtml}
+                    </div>
+                    <div class="scammer-title">${name}</div>
+                    <div class="scammer-status">${hasInfo ? (isConfirmed ? '已核实' : '待核实') : '未添加信息'}</div>
+                    <div class="scammer-uid">${uid}</div>
+                    ${hasInfo && Object.keys(details).length > 0 ? `
+                        <button class="detail-toggle" onclick="toggleDetails('scammer-${i}'); event.stopPropagation();">
+                            查看详情 <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="scammer-details">
+                            ${detailsHtml}
+                            ${Object.keys(details).length > 2 ? '<div class="detail-item"><span class="detail-content" style="color:#888;">...还有${Object.keys(details).length - 2}项信息</span></div>' : ''}
+                            <div class="detail-item" style="margin-top:8px;">
+                                <button class="detail-toggle" onclick="showDetailModal(${JSON.stringify(scammer).replace(/"/g, '&quot;')}); event.stopPropagation();" style="font-size:0.8rem;">
+                                    <i class="fas fa-external-link-alt"></i> 查看完整详情
+                                </button>
+                            </div>
+                        </div>
+                    ` : ''}
+                `;
+                
+                // 添加点击事件
+                if (hasInfo && bilibiliUrl !== "#") {
+                    button.addEventListener('click', function(e) { 
+                        if (!e.target.closest('.detail-toggle')) {
+                            window.open(bilibiliUrl, '_blank'); 
+                        }
+                    });
+                } else {
+                    button.addEventListener('click', function() { 
+                        alert(`骗子 #${i} 的信息尚未添加，敬请期待更新。`); 
+                    });
+                }
+                
+                scammerGrid.appendChild(button);
+            }
+            
+            updateStats();
+        }
         
+        // 初始化生成按钮
+        generateButtons();
+        
+        // 关闭模态框
+        modalClose.addEventListener('click', function() {
+            detailModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        // 点击模态框外部关闭
+        detailModal.addEventListener('click', function(e) {
+            if (e.target === detailModal) {
+                detailModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // ESC键关闭模态框
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && detailModal.style.display === 'flex') {
+                detailModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // 导航按钮事件处理
         document.getElementById('reportBtn').addEventListener('click', function(e) {
             e.preventDefault();
             alert('举报功能即将上线，目前可通过我的B站主页私信举报骗子信息。');
@@ -392,9 +854,10 @@
         console.log("B站骗子网站公布平台已加载完成！");
         console.log("快捷键提示：按R键可以随机查看一个已确认的骗子信息");
         
+        // 添加键盘快捷键
         document.addEventListener('keydown', function(e) {
             if (e.key === 'r' || e.key === 'R') {
-                const confirmedButtons = scammerData.filter(item => item[3] === true);
+                const confirmedButtons = scammerData.filter(item => item[4] === true);
                 if (confirmedButtons.length > 0) {
                     const randomScammer = confirmedButtons[Math.floor(Math.random() * confirmedButtons.length)];
                     const buttonId = 'scammer-' + randomScammer[0];
