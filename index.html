@@ -523,7 +523,7 @@
     <header>
         <h1>凡罚于pofanfa的网站之：b站骗子实时更新</h1>
         <div class="subtitle">
-            <p>本平台实时更新B站上已确认的骗子账号信息，帮助用户识别和避免受骗。所有信息均经过核实，点击下方按钮可跳转到骗子的B站个人空间。点击"查看详情"可查看骗子详细信息。</p>
+            <p>本平台实时更新B站骗子账号信息，帮助用户识别和避免受骗。部分信息均经过核实，点击下方按钮可跳转到骗子的B站个人空间。点击"查看详情"可查看骗子详细信息。信息不一定准确。快捷键提示：按R键可以随机查看一个已确认的骗子信息</p>
         </div>
         <div class="info-box">
             <i class="fas fa-exclamation-circle"></i>
@@ -597,7 +597,7 @@
             }],
         ];
         
-        const totalButtons = 100;
+       const totalButtons = 100;
         const scammerGrid = document.getElementById('scammerGrid');
         const scammerCount = document.getElementById('scammerCount');
         const confirmedCount = document.getElementById('confirmedCount');
@@ -607,16 +607,14 @@
         
         let activeButton = null;
         
-        // 生成默认头像URL（使用HTTPS协议的占位图服务）
+        // 生成默认头像URL
         function getDefaultAvatar(id) {
-            // 使用支持HTTPS的占位图服务
             return `https://avatars.dicebear.com/api/avataaars/${id}.svg?background=%23ff4d4f`;
         }
         
-        // 安全的图片加载函数，处理HTTPS问题
+        // 安全的图片加载函数
         function loadImageSafely(url, id) {
             return new Promise((resolve) => {
-                // 如果URL是HTTP，尝试转换为HTTPS
                 let secureUrl = url;
                 if (url.startsWith('http://')) {
                     secureUrl = url.replace('http://', 'https://');
@@ -625,7 +623,6 @@
                 const img = new Image();
                 img.onload = () => resolve(secureUrl);
                 img.onerror = () => {
-                    // 如果HTTPS失败，尝试使用代理
                     const proxyUrl = `https://images.weserv.nl/?url=${encodeURIComponent(url.replace('http://', '').replace('https://', ''))}&w=60&h=60&fit=cover`;
                     const proxyImg = new Image();
                     proxyImg.onload = () => resolve(proxyUrl);
@@ -683,14 +680,6 @@
             const isConfirmed = scammer[4] || false;
             const details = scammer[5] || {};
             
-            // 构建头像HTML
-            let avatarHtml = '';
-            if (avatarUrl && avatarUrl.trim() !== "") {
-                avatarHtml = `<img src="${avatarUrl}" alt="${name}" onerror="this.src='${getDefaultAvatar(id)}'" />`;
-            } else {
-                avatarHtml = `<img src="${getDefaultAvatar(id)}" alt="${name}" />`;
-            }
-            
             // 提取B站UID
             let uid = "未知";
             if (bilibiliUrl && bilibiliUrl.includes("space.bilibili.com/")) {
@@ -700,12 +689,12 @@
                 }
             }
             
-            // 构建详细信息HTML
+            // 构建详细信息HTML - 已删除头像部分
             let detailsHtml = '';
             if (Object.keys(details).length > 0) {
                 detailsHtml = Object.entries(details).map(([key, value]) => `
                     <div class="modal-detail-item">
-                        <div class="modal-detail-label">${key}：</div>
+                        <div class="modal-detail-label">${key}</div>
                         <div class="modal-detail-content">${value}</div>
                     </div>
                 `).join('');
@@ -713,10 +702,14 @@
                 detailsHtml = '<div class="modal-detail-item"><div class="modal-detail-content">暂无详细信息</div></div>';
             }
             
-            // 设置模态框内容
+            // 设置模态框内容 - 已删除头像部分
             modalContent.innerHTML = `
-                <div class="modal-avatar">${avatarHtml}</div>
-                <h2 class="modal-title">${name}</h2>
+                <div class="modal-header">
+                    <h2 class="modal-title">${name}</h2>
+                    <div class="modal-badge ${isConfirmed ? 'confirmed' : 'pending'}">
+                        ${isConfirmed ? '已核实' : '待核实'}
+                    </div>
+                </div>
                 <div class="modal-details">
                     <div class="modal-detail-item">
                         <div class="modal-detail-label">编号</div>
@@ -726,15 +719,11 @@
                         <div class="modal-detail-label">B站UID</div>
                         <div class="modal-detail-content">${uid}</div>
                     </div>
-                    <div class="modal-detail-item">
-                        <div class="modal-detail-label">状态</div>
-                        <div class="modal-detail-content">${isConfirmed ? '<span style="color:#52c41a;">已核实</span>' : '<span style="color:#faad14;">待核实</span>'}</div>
-                    </div>
                     ${detailsHtml}
                 </div>
                 <div class="modal-links">
                     ${bilibiliUrl !== "#" ? `<a href="${bilibiliUrl}" target="_blank" class="modal-btn"><i class="fas fa-external-link-alt"></i> 访问B站主页</a>` : ''}
-                    <button class="modal-btn" onclick="copyInfo(${id})"><i class="far fa-copy"></i> 复制信息</button>
+                    <button class="modal-btn danger" onclick="copyInfo(${id})"><i class="far fa-copy"></i> 复制骗子信息</button>
                 </div>
             `;
             
