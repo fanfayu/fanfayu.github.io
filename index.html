@@ -1,17 +1,24 @@
+<?php header('Content-Type: text/html; charset=utf-8'); ?>
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BÕ¾Æ­×ÓÍøÕ¾¹«²¼Æ½Ì¨</title>
+    <title>Bç«™éª—å­ç½‘ç«™å…¬å¸ƒå¹³å°</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            background-color: #f5f7fa; 
-            color: #333; 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
             line-height: 1.6;
-            font-family: Arial, sans-serif; 
         }
         
         nav {
@@ -255,189 +262,155 @@
     </style>
 </head>
 <body>
-    <!-- ËùÓĞÄÚÈİ½«Í¨¹ıJavaScript¶¯Ì¬Éú³É -->
-    
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>Bç«™é˜²éª—ä¸­å¿ƒ</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="https://space.bilibili.com/3546741676706164" target="_blank"><i class="fas fa-home"></i> æˆ‘çš„Bç«™ä¸»é¡µ</a></li>
+                <li><a href="#" id="reportBtn"><i class="fas fa-flag"></i> ä¸¾æŠ¥éª—å­</a></li>
+                <li><a href="#" id="aboutBtn"><i class="fas fa-info-circle"></i> å…³äºæœ¬ç«™</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header>
+        <h1>å‡¡ç½šäºpofanfaçš„ç½‘ç«™ä¹‹ï¼šbç«™éª—å­å®æ—¶æ›´æ–°</h1>
+        <div class="subtitle">
+            <p>æœ¬å¹³å°å®æ—¶æ›´æ–°Bç«™ä¸Šå·²ç¡®è®¤çš„éª—å­è´¦å·ä¿¡æ¯ï¼Œå¸®åŠ©ç”¨æˆ·è¯†åˆ«å’Œé¿å…å—éª—ã€‚æ‰€æœ‰ä¿¡æ¯å‡ç»è¿‡æ ¸å®ï¼Œç‚¹å‡»ä¸‹æ–¹æŒ‰é’®å¯è·³è½¬åˆ°éª—å­çš„Bç«™ä¸ªäººç©ºé—´ã€‚</p>
+        </div>
+        <div class="info-box">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>å½“å‰å…±æ”¶å½• <span id="scammerCount">0</span> ä¸ªéª—å­è´¦å·ï¼Œå…¶ä¸­ <span id="confirmedCount">0</span> ä¸ªå·²ç¡®è®¤ä¿¡æ¯</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="buttons-grid" id="scammerGrid"></div>
+    </div>
+
+    <footer>
+        <p>å“”å“©å“”å“©éª—å­ç½‘ç«™å…¬å¸ƒå¹³å° &copy; 2026 - é˜²éª—å…¬ç›Šé¡¹ç›®</p>
+        <p>æœ¬ç½‘ç«™ä»…ç”¨äºå…¬å¸ƒç»è¿‡æ ¸å®çš„Bç«™éª—å­ä¿¡æ¯ï¼Œæ—¨åœ¨å¸®åŠ©ç”¨æˆ·è¯†åˆ«è¯ˆéª—é£é™©</p>
+        <div class="footer-links">
+            <a href="https://space.bilibili.com/3546741676706164" target="_blank">æˆ‘çš„Bç«™ä¸»é¡µ</a> | 
+            <a href="#" id="privacyBtn">éšç§æ”¿ç­–</a> | 
+            <a href="#" id="contactBtn">è”ç³»æˆ‘ä»¬</a>
+        </div>
+    </footer>
+
     <script>
-        // Ê×ÏÈ´´½¨ËùÓĞHTML½á¹¹
-        document.addEventListener('DOMContentLoaded', function() {
-            // ´´½¨µ¼º½À¸
-            const nav = document.createElement('nav');
-            nav.innerHTML = `
-                <div class="nav-container">
-                    <div class="logo">
-                        <i class="fas fa-shield-alt"></i>
-                        <span id="logoText">BÕ¾·ÀÆ­ÖĞĞÄ</span>
-                    </div>
-                    <ul class="nav-links">
-                        <li><a href="https://space.bilibili.com/3546741676706164" target="_blank" id="myHome"><i class="fas fa-home"></i> ÎÒµÄBÕ¾Ö÷Ò³</a></li>
-                        <li><a href="#" id="reportBtn"><i class="fas fa-flag"></i> ¾Ù±¨Æ­×Ó</a></li>
-                        <li><a href="#" id="aboutBtn"><i class="fas fa-info-circle"></i> ¹ØÓÚ±¾Õ¾</a></li>
-                    </ul>
-                </div>
-            `;
-            document.body.prepend(nav);
+        // æ¨¡æ‹Ÿéª—å­æ•°æ®
+        const scammerData = [
+            [1, "", "", false],
+            [2, "", "", false],
+            [3, "", "", false],
+            [4, "", "", false],
+            [5, "", "", false],
+            [6, "", "", false],
+            [7, "", "", false],
+            [8, "", "", false],
+            [9, "", "", false],
+            [10, "", "", false]
+        ];
+        
+        const totalButtons = 100;
+        const scammerGrid = document.getElementById('scammerGrid');
+        const scammerCount = document.getElementById('scammerCount');
+        const confirmedCount = document.getElementById('confirmedCount');
+        
+        let addedScammerCount = 0;
+        let confirmedScammerCount = 0;
+        
+        for (let i = 1; i <= totalButtons; i++) {
+            const scammer = scammerData.find(item => item[0] === i);
+            let title = "æ•¬è¯·æœŸå¾…";
+            let url = "#";
+            let isConfirmed = false;
+            let hasInfo = false;
             
-            // ´´½¨Ö÷±êÌâÇøÓò
-            const header = document.createElement('header');
-            header.innerHTML = `
-                <h1 id="mainTitle">·²·£ÓÚpofanfaµÄÍøÕ¾Ö®£ºbÕ¾Æ­×ÓÊµÊ±¸üĞÂ</h1>
-                <div class="subtitle">
-                    <p id="subtitleText">±¾Æ½Ì¨ÊµÊ±¸üĞÂBÕ¾ÉÏÒÑÈ·ÈÏµÄÆ­×ÓÕËºÅĞÅÏ¢£¬°ïÖúÓÃ»§Ê¶±ğºÍ±ÜÃâÊÜÆ­¡£ËùÓĞĞÅÏ¢¾ù¾­¹ıºËÊµ£¬µã»÷ÏÂ·½°´Å¥¿ÉÌø×ªµ½Æ­×ÓµÄBÕ¾¸öÈË¿Õ¼ä¡£</p>
-                </div>
-                <div class="info-box">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <span>µ±Ç°¹²ÊÕÂ¼ <span id="scammerCount">0</span> ¸öÆ­×ÓÕËºÅ£¬ÆäÖĞ <span id="confirmedCount">0</span> ¸öÒÑÈ·ÈÏĞÅÏ¢</span>
-                </div>
-            `;
-            document.body.appendChild(header);
-            
-            // ´´½¨°´Å¥Íø¸ñÈİÆ÷
-            const container = document.createElement('div');
-            container.className = 'container';
-            container.innerHTML = '<div class="buttons-grid" id="scammerGrid"></div>';
-            document.body.appendChild(container);
-            
-            // ´´½¨Ò³½Å
-            const footer = document.createElement('footer');
-            footer.innerHTML = `
-                <p>ßÙÁ¨ßÙÁ¨Æ­×ÓÍøÕ¾¹«²¼Æ½Ì¨ &copy; 2026 - ·ÀÆ­¹«ÒæÏîÄ¿</p>
-                <p>±¾ÍøÕ¾½öÓÃÓÚ¹«²¼¾­¹ıºËÊµµÄBÕ¾Æ­×ÓĞÅÏ¢£¬Ö¼ÔÚ°ïÖúÓÃ»§Ê¶±ğÕ©Æ­·çÏÕ</p>
-                <div class="footer-links">
-                    <a href="https://space.bilibili.com/3546741676706164" target="_blank" id="footerHome">ÎÒµÄBÕ¾Ö÷Ò³</a> | 
-                    <a href="#" id="privacyBtn">ÒşË½Õş²ß</a> | 
-                    <a href="#" id="contactBtn">ÁªÏµÎÒÃÇ</a>
-                </div>
-            `;
-            document.body.appendChild(footer);
-            
-            // Ä£ÄâÆ­×ÓÊı¾İ
-            const scammerData = [
-                [1, "", "", false],
-                [2, "", "", false],
-                [3, "", "", false],
-                [4, "", "", false],
-                [5, "", "", false],
-                [6, "", "", false],
-                [7, "", "", false],
-                [8, "", "", false],
-                [9, "", "", false],
-                [10, "", "", false]
-            ];
-            
-            // ³õÊ¼»¯100¸ö°´Å¥
-            const totalButtons = 100;
-            const scammerGrid = document.getElementById('scammerGrid');
-            const scammerCount = document.getElementById('scammerCount');
-            const confirmedCount = document.getElementById('confirmedCount');
-            
-            let addedScammerCount = 0;
-            let confirmedScammerCount = 0;
-            
-            // Éú³É°´Å¥
-            for (let i = 1; i <= totalButtons; i++) {
-                const scammer = scammerData.find(item => item[0] === i);
-                let title = "¾´ÇëÆÚ´ı";
-                let url = "#";
-                let isConfirmed = false;
-                let hasInfo = false;
-                
-                if (scammer) {
-                    title = scammer[1] || "¾´ÇëÆÚ´ı";
-                    url = scammer[2] || "#";
-                    isConfirmed = scammer[3] || false;
-                    hasInfo = scammer[1] !== "" && scammer[2] !== "";
-                    if (hasInfo) {
-                        addedScammerCount++;
-                        if (isConfirmed) confirmedScammerCount++;
-                    }
+            if (scammer) {
+                title = scammer[1] || "æ•¬è¯·æœŸå¾…";
+                url = scammer[2] || "#";
+                isConfirmed = scammer[3] || false;
+                hasInfo = scammer[1] !== "" && scammer[2] !== "";
+                if (hasInfo) {
+                    addedScammerCount++;
+                    if (isConfirmed) confirmedScammerCount++;
                 }
-                
-                const button = document.createElement('button');
-                button.className = `scammer-btn ${hasInfo ? '' : 'warning'}`;
-                button.id = `scammer-${i}`;
-                
-                const scammerId = document.createElement('div');
-                scammerId.className = 'scammer-id';
-                scammerId.textContent = '#' + i.toString().padStart(3, '0');
-                
-                const icon = document.createElement('i');
-                icon.className = 'fas ' + (hasInfo ? 'fa-user-secret' : 'fa-question-circle');
-                
-                const scammerTitle = document.createElement('div');
-                scammerTitle.className = 'scammer-title';
-                scammerTitle.textContent = title;
-                
-                const scammerStatus = document.createElement('div');
-                scammerStatus.className = 'scammer-status';
-                scammerStatus.textContent = hasInfo ? (isConfirmed ? 'ÒÑºËÊµ' : '´ıºËÊµ') : 'Î´Ìí¼ÓĞÅÏ¢';
-                
-                button.appendChild(scammerId);
-                button.appendChild(icon);
-                button.appendChild(scammerTitle);
-                button.appendChild(scammerStatus);
-                
-                if (hasInfo && url !== "#") {
-                    button.addEventListener('click', function() { 
-                        window.open(url, '_blank'); 
-                    });
-                } else {
-                    button.addEventListener('click', function() { 
-                        alert('Æ­×Ó #' + i + ' µÄĞÅÏ¢ÉĞÎ´Ìí¼Ó£¬¾´ÇëÆÚ´ı¸üĞÂ¡£'); 
-                    });
-                }
-                
-                scammerGrid.appendChild(button);
             }
             
-            // ¸üĞÂÍ³¼ÆÊı¾İ
-            scammerCount.textContent = addedScammerCount;
-            confirmedCount.textContent = confirmedScammerCount;
+            const button = document.createElement('button');
+            button.className = `scammer-btn ${hasInfo ? '' : 'warning'}`;
+            button.id = `scammer-${i}`;
             
-            // µ¼º½°´Å¥ÊÂ¼ş´¦Àí
-            document.getElementById('reportBtn').addEventListener('click', function(e) {
-                e.preventDefault();
-                alert('¾Ù±¨¹¦ÄÜ¼´½«ÉÏÏß£¬Ä¿Ç°¿ÉÍ¨¹ıÎÒµÄBÕ¾Ö÷Ò³Ë½ĞÅ¾Ù±¨Æ­×ÓĞÅÏ¢¡£');
-            });
+            button.innerHTML = `
+                <div class="scammer-id">#${i.toString().padStart(3, '0')}</div>
+                <i class="fas ${hasInfo ? 'fa-user-secret' : 'fa-question-circle'}"></i>
+                <div class="scammer-title">${title}</div>
+                <div class="scammer-status">${hasInfo ? (isConfirmed ? 'å·²æ ¸å®' : 'å¾…æ ¸å®') : 'æœªæ·»åŠ ä¿¡æ¯'}</div>
+            `;
             
-            document.getElementById('aboutBtn').addEventListener('click', function(e) {
-                e.preventDefault();
-                alert('±¾Õ¾Îª¹«ÒæĞÔÖÊ£¬Ö¼ÔÚ°ïÖúBÕ¾ÓÃ»§Ê¶±ğºÍ±ÜÃâÆ­×Ó¡£ËùÓĞĞÅÏ¢¾ù¾­¹ı³õ²½ºËÊµ£¬µ«ÇëÓÃ»§×ÔĞĞÅĞ¶Ï·çÏÕ¡£');
-            });
+            if (hasInfo && url !== "#") {
+                button.addEventListener('click', function() { 
+                    window.open(url, '_blank'); 
+                });
+            } else {
+                button.addEventListener('click', function() { 
+                    alert('éª—å­ #' + i + ' çš„ä¿¡æ¯å°šæœªæ·»åŠ ï¼Œæ•¬è¯·æœŸå¾…æ›´æ–°ã€‚'); 
+                });
+            }
             
-            document.getElementById('privacyBtn').addEventListener('click', function(e) {
-                e.preventDefault();
-                alert('ÒşË½Õş²ß£º±¾Õ¾²»»áÊÕ¼¯ÓÃ»§¸öÈËĞÅÏ¢£¬½öÕ¹Ê¾¹«¿ªµÄÆ­×ÓÕËºÅĞÅÏ¢¡£');
-            });
-            
-            document.getElementById('contactBtn').addEventListener('click', function(e) {
-                e.preventDefault();
-                alert('ÁªÏµ·½Ê½£ºÇëÍ¨¹ıBÕ¾Ë½ĞÅÁªÏµÎÒµÄÖ÷Ò³£ºhttps://space.bilibili.com/3546741676706164');
-            });
-            
-            console.log("BÕ¾Æ­×ÓÍøÕ¾¹«²¼Æ½Ì¨ÒÑ¼ÓÔØÍê³É£¡");
-            console.log("¿ì½İ¼üÌáÊ¾£º°´R¼ü¿ÉÒÔËæ»ú²é¿´Ò»¸öÒÑÈ·ÈÏµÄÆ­×ÓĞÅÏ¢");
-            
-            // Ìí¼Ó¼üÅÌ¿ì½İ¼ü
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'r' || e.key === 'R') {
-                    const confirmedButtons = scammerData.filter(item => item[3] === true);
-                    if (confirmedButtons.length > 0) {
-                        const randomScammer = confirmedButtons[Math.floor(Math.random() * confirmedButtons.length)];
-                        const buttonId = 'scammer-' + randomScammer[0];
-                        const buttonElement = document.getElementById(buttonId);
-                        if (buttonElement) {
-                            buttonElement.style.backgroundColor = '#ffcc00';
-                            buttonElement.style.transform = 'scale(1.05)';
-                            buttonElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            setTimeout(function() {
-                                buttonElement.style.backgroundColor = '';
-                                buttonElement.style.transform = '';
-                            }, 2000);
-                            console.log('Ëæ»úÑ¡ÖĞÆ­×Ó #' + randomScammer[0] + ': ' + randomScammer[1]);
-                        }
+            scammerGrid.appendChild(button);
+        }
+        
+        scammerCount.textContent = addedScammerCount;
+        confirmedCount.textContent = confirmedScammerCount;
+        
+        document.getElementById('reportBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('ä¸¾æŠ¥åŠŸèƒ½å³å°†ä¸Šçº¿ï¼Œç›®å‰å¯é€šè¿‡æˆ‘çš„Bç«™ä¸»é¡µç§ä¿¡ä¸¾æŠ¥éª—å­ä¿¡æ¯ã€‚');
+        });
+        
+        document.getElementById('aboutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('æœ¬ç«™ä¸ºå…¬ç›Šæ€§è´¨ï¼Œæ—¨åœ¨å¸®åŠ©Bç«™ç”¨æˆ·è¯†åˆ«å’Œé¿å…éª—å­ã€‚æ‰€æœ‰ä¿¡æ¯å‡ç»è¿‡åˆæ­¥æ ¸å®ï¼Œä½†è¯·ç”¨æˆ·è‡ªè¡Œåˆ¤æ–­é£é™©ã€‚');
+        });
+        
+        document.getElementById('privacyBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('éšç§æ”¿ç­–ï¼šæœ¬ç«™ä¸ä¼šæ”¶é›†ç”¨æˆ·ä¸ªäººä¿¡æ¯ï¼Œä»…å±•ç¤ºå…¬å¼€çš„éª—å­è´¦å·ä¿¡æ¯ã€‚');
+        });
+        
+        document.getElementById('contactBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('è”ç³»æ–¹å¼ï¼šè¯·é€šè¿‡Bç«™ç§ä¿¡è”ç³»æˆ‘çš„ä¸»é¡µï¼šhttps://space.bilibili.com/3546741676706164');
+        });
+        
+        console.log("Bç«™éª—å­ç½‘ç«™å…¬å¸ƒå¹³å°å·²åŠ è½½å®Œæˆï¼");
+        console.log("å¿«æ·é”®æç¤ºï¼šæŒ‰Ré”®å¯ä»¥éšæœºæŸ¥çœ‹ä¸€ä¸ªå·²ç¡®è®¤çš„éª—å­ä¿¡æ¯");
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'r' || e.key === 'R') {
+                const confirmedButtons = scammerData.filter(item => item[3] === true);
+                if (confirmedButtons.length > 0) {
+                    const randomScammer = confirmedButtons[Math.floor(Math.random() * confirmedButtons.length)];
+                    const buttonId = 'scammer-' + randomScammer[0];
+                    const buttonElement = document.getElementById(buttonId);
+                    if (buttonElement) {
+                        buttonElement.style.backgroundColor = '#ffcc00';
+                        buttonElement.style.transform = 'scale(1.05)';
+                        buttonElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        setTimeout(function() {
+                            buttonElement.style.backgroundColor = '';
+                            buttonElement.style.transform = '';
+                        }, 2000);
+                        console.log('éšæœºé€‰ä¸­éª—å­ #' + randomScammer[0] + ': ' + randomScammer[1]);
                     }
                 }
-            });
+            }
         });
     </script>
 </body>
