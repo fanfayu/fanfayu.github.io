@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B站骗子网站公布平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: #f5f7fa; 
+            color: #333; 
+            line-height: 1.6;
+            font-family: Arial, sans-serif; 
+        }
+        
+        nav {
+            background: linear-gradient(135deg, #00a1d6 0%, #0085b2 100%);
+            padding: 15px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.4rem;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 1.6rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        header {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #00a1d6;
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, transparent, #00a1d6, transparent);
+            bottom: -10px;
+            left: 0;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+        }
+        
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        @media (max-width: 1100px) {
+            .buttons-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .buttons-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 650px) {
+            .buttons-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 450px) {
+            .buttons-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .scammer-btn {
+            background-color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 25px 15px;
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .scammer-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
+            background-color: #ffebe9;
+        }
+        
+        .scammer-btn.warning:hover {
+            background-color: #fff3e0;
+        }
+        
+        .scammer-btn i {
+            font-size: 2rem;
+            color: #ff4d4f;
+            margin-bottom: 15px;
+        }
+        
+        .scammer-btn.warning i {
+            color: #ff9800;
+        }
+        
+        .scammer-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+        
+        .scammer-status {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .scammer-id {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #f0f2f5;
+            color: #999;
+            font-size: 0.8rem;
+            padding: 3px 8px;
+            border-radius: 10px;
+        }
+        
+        footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+        }
+        
+        footer p {
+            margin: 10px 0;
+            font-size: 0.95rem;
+        }
+        
+        .footer-links {
+            margin-top: 20px;
+        }
+        
+        .footer-links a {
+            color: #3498db;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .info-box {
+            background-color: #e8f4fc;
+            border-left: 4px solid #00a1d6;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .info-box i {
+            color: #00a1d6;
+            margin-right: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            .scammer-btn {
+                padding: 20px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 所有内容将通过JavaScript动态生成 -->
+    
+    <script>
+        // 首先创建所有HTML结构
+        document.addEventListener('DOMContentLoaded', function() {
+            // 创建导航栏
+            const nav = document.createElement('nav');
+            nav.innerHTML = `
+                <div class="nav-container">
+                    <div class="logo">
+                        <i class="fas fa-shield-alt"></i>
+                        <span id="logoText">B站防骗中心</span>
+                    </div>
+                    <ul class="nav-links">
+                        <li><a href="https://space.bilibili.com/3546741676706164" target="_blank" id="myHome"><i class="fas fa-home"></i> 我的B站主页</a></li>
+                        <li><a href="#" id="reportBtn"><i class="fas fa-flag"></i> 举报骗子</a></li>
+                        <li><a href="#" id="aboutBtn"><i class="fas fa-info-circle"></i> 关于本站</a></li>
+                    </ul>
+                </div>
+            `;
+            document.body.prepend(nav);
+            
+            // 创建主标题区域
+            const header = document.createElement('header');
+            header.innerHTML = `
+                <h1 id="mainTitle">凡罚于pofanfa的网站之：b站骗子实时更新</h1>
+                <div class="subtitle">
+                    <p id="subtitleText">本平台实时更新B站上已确认的骗子账号信息，帮助用户识别和避免受骗。所有信息均经过核实，点击下方按钮可跳转到骗子的B站个人空间。</p>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>当前共收录 <span id="scammerCount">0</span> 个骗子账号，其中 <span id="confirmedCount">0</span> 个已确认信息</span>
+                </div>
+            `;
+            document.body.appendChild(header);
+            
+            // 创建按钮网格容器
+            const container = document.createElement('div');
+            container.className = 'container';
+            container.innerHTML = '<div class="buttons-grid" id="scammerGrid"></div>';
+            document.body.appendChild(container);
+            
+            // 创建页脚
+            const footer = document.createElement('footer');
+            footer.innerHTML = `
+                <p>哔哩哔哩骗子网站公布平台 &copy; 2026 - 防骗公益项目</p>
+                <p>本网站仅用于公布经过核实的B站骗子信息，旨在帮助用户识别诈骗风险</p>
+                <div class="footer-links">
+                    <a href="https://space.bilibili.com/3546741676706164" target="_blank" id="footerHome">我的B站主页</a> | 
+                    <a href="#" id="privacyBtn">隐私政策</a> | 
+                    <a href="#" id="contactBtn">联系我们</a>
+                </div>
+            `;
+            document.body.appendChild(footer);
+            
+            // 模拟骗子数据
+            const scammerData = [
+                [1, "", "", false],
+                [2, "", "", false],
+                [3, "", "", false],
+                [4, "", "", false],
+                [5, "", "", false],
+                [6, "", "", false],
+                [7, "", "", false],
+                [8, "", "", false],
+                [9, "", "", false],
+                [10, "", "", false]
+            ];
+            
+            // 初始化100个按钮
+            const totalButtons = 100;
+            const scammerGrid = document.getElementById('scammerGrid');
+            const scammerCount = document.getElementById('scammerCount');
+            const confirmedCount = document.getElementById('confirmedCount');
+            
+            let addedScammerCount = 0;
+            let confirmedScammerCount = 0;
+            
+            // 生成按钮
+            for (let i = 1; i <= totalButtons; i++) {
+                const scammer = scammerData.find(item => item[0] === i);
+                let title = "敬请期待";
+                let url = "#";
+                let isConfirmed = false;
+                let hasInfo = false;
+                
+                if (scammer) {
+                    title = scammer[1] || "敬请期待";
+                    url = scammer[2] || "#";
+                    isConfirmed = scammer[3] || false;
+                    hasInfo = scammer[1] !== "" && scammer[2] !== "";
+                    if (hasInfo) {
+                        addedScammerCount++;
+                        if (isConfirmed) confirmedScammerCount++;
+                    }
+                }
+                
+                const button = document.createElement('button');
+                button.className = `scammer-btn ${hasInfo ? '' : 'warning'}`;
+                button.id = `scammer-${i}`;
+                
+                const scammerId = document.createElement('div');
+                scammerId.className = 'scammer-id';
+                scammerId.textContent = '#' + i.toString().padStart(3, '0');
+                
+                const icon = document.createElement('i');
+                icon.className = 'fas ' + (hasInfo ? 'fa-user-secret' : 'fa-question-circle');
+                
+                const scammerTitle = document.createElement('div');
+                scammerTitle.className = 'scammer-title';
+                scammerTitle.textContent = title;
+                
+                const scammerStatus = document.createElement('div');
+                scammerStatus.className = 'scammer-status';
+                scammerStatus.textContent = hasInfo ? (isConfirmed ? '已核实' : '待核实') : '未添加信息';
+                
+                button.appendChild(scammerId);
+                button.appendChild(icon);
+                button.appendChild(scammerTitle);
+                button.appendChild(scammerStatus);
+                
+                if (hasInfo && url !== "#") {
+                    button.addEventListener('click', function() { 
+                        window.open(url, '_blank'); 
+                    });
+                } else {
+                    button.addEventListener('click', function() { 
+                        alert('骗子 #' + i + ' 的信息尚未添加，敬请期待更新。'); 
+                    });
+                }
+                
+                scammerGrid.appendChild(button);
+            }
+            
+            // 更新统计数据
+            scammerCount.textContent = addedScammerCount;
+            confirmedCount.textContent = confirmedScammerCount;
+            
+            // 导航按钮事件处理
+            document.getElementById('reportBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('举报功能即将上线，目前可通过我的B站主页私信举报骗子信息。');
+            });
+            
+            document.getElementById('aboutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('本站为公益性质，旨在帮助B站用户识别和避免骗子。所有信息均经过初步核实，但请用户自行判断风险。');
+            });
+            
+            document.getElementById('privacyBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('隐私政策：本站不会收集用户个人信息，仅展示公开的骗子账号信息。');
+            });
+            
+            document.getElementById('contactBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('联系方式：请通过B站私信联系我的主页：https://space.bilibili.com/3546741676706164');
+            });
+            
+            console.log("B站骗子网站公布平台已加载完成！");
+            console.log("快捷键提示：按R键可以随机查看一个已确认的骗子信息");
+            
+            // 添加键盘快捷键
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'r' || e.key === 'R') {
+                    const confirmedButtons = scammerData.filter(item => item[3] === true);
+                    if (confirmedButtons.length > 0) {
+                        const randomScammer = confirmedButtons[Math.floor(Math.random() * confirmedButtons.length)];
+                        const buttonId = 'scammer-' + randomScammer[0];
+                        const buttonElement = document.getElementById(buttonId);
+                        if (buttonElement) {
+                            buttonElement.style.backgroundColor = '#ffcc00';
+                            buttonElement.style.transform = 'scale(1.05)';
+                            buttonElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            setTimeout(function() {
+                                buttonElement.style.backgroundColor = '';
+                                buttonElement.style.transform = '';
+                            }, 2000);
+                            console.log('随机选中骗子 #' + randomScammer[0] + ': ' + randomScammer[1]);
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
